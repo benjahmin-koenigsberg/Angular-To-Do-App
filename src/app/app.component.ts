@@ -2,12 +2,19 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { Todo } from './Todo';
+import { HeaderComponent } from './components/header/header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    FormsModule,
+    ReactiveFormsModule,
+    HeaderComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -17,13 +24,15 @@ export class AppComponent {
   newTodo: string;
 
   ngOnInit() {
-    //console.log(localStorage.getItem('todos'));
-    let todoArray = JSON.parse(localStorage.getItem('todos'));
-    console.log(todoArray);
-    for (let i = 0; i < todoArray.length; i++) {
-      let todo = todoArray[i];
-      this.todos.push(todo);
+    if (localStorage) {
+      let todoArray = JSON.parse(localStorage.getItem('todos'));
+      console.log(todoArray);
+      for (let i = 0; i < todoArray.length; i++) {
+        let todo = todoArray[i];
+        this.todos.push(todo);
+      }
     }
+    return;
   }
 
   saveTodo() {
